@@ -35,7 +35,8 @@
 				"ms-dotnettools.csdevkit",
 				"ms-dotnettools.vscode-dotnet-pack",
 				"ms-dotnettools.vscode-dotnet-runtime",
-				"ms-dotnettools.csharp"
+				"ms-dotnettools.csharp",
+				"humao.rest-client"
 			],
 			"settings": {
 				"telemetry.enableTelemetry": false,
