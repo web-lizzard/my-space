@@ -16,10 +16,10 @@ Content-Type: application/json
 }
 
 ###
-GET  {{url}}/reservations/2
+GET  {{url}}/reservations/4
 
 ###
-PUT  {{url}}/reservations/1
+PUT  {{url}}/reservations/4
 Content-Type: application/json
 
 {
@@ -30,5 +30,4 @@ Content-Type: application/json
 }
 
 ###
-DELETE   {{url}}/reservations/2
-
+DELETE   {{url}}/reservations/4
