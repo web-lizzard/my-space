@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Net.Http.Headers;
-using MySpot.Api.Models;
+using MySpot.Api.Commands;
+using MySpot.Api.DTO;
+using MySpot.Api.Services;
 
 namespace MySpot.Api.Controllers;
 
@@ -13,29 +14,29 @@ public class ReservationController : ControllerBase
 
 
     [HttpGet]
-    public ActionResult<IEnumerable<Reservation>> Get() => Ok(service.FindAll());
+    public ActionResult<IEnumerable<ReservationDto>> Get() => Ok(service.FindAllWeekly());
 
-    [HttpGet(template: "{id:int}")]
-    public ActionResult<Reservation> Get(int id)
+    [HttpGet(template: "{id:Guid}")]
+    public ActionResult<ReservationDto> Get(Guid id)
     {
         var reservation = service.FindById(id);
 
-        return reservation is null ? Ok(reservation) : NotFound();
+        return reservation is null ? NotFound() : Ok(reservation);
     }
 
     [HttpPost]
-    public ActionResult Post(Reservation reservation)
+    public ActionResult Post(CreateReservation command)
     {
-        var id = service.Create(reservation);
+        var id = service.Create(command with { ReservationId = Guid.NewGuid() });
 
         return id is not null ? CreatedAtAction(nameof(Get), new { id }, null) : BadRequest();
     }
 
-    [HttpPut("{id:int}")]
-    public ActionResult Put(int id, Reservation reservation) => service.Update(id, reservation) ? NoContent() : NotFound();
+    [HttpPut("{id:Guid}")]
+    public ActionResult Put(Guid id, UpdateReservationLicensePlate command) => service.Update(command with { id = id }) ? NoContent() : NotFound();
 
-    [HttpDelete("{id:int}")]
-    public ActionResult Delete(int id) => service.Delete(id) ? NoContent() : NotFound();
+    [HttpDelete("{id:Guid}")]
+    public ActionResult Delete(Guid id) => service.Delete(new DeleteReservation(id)) ? NoContent() : NotFound();
 
 }
 

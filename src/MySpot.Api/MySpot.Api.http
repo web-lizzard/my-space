@@ -10,24 +10,27 @@ Content-Type: application/json
 
 {
     "employeeName": "John Doe",
-    "parkingSpotName": "P1",
-    "licensePlate": "XYZ1344"
+    "parkingSpotId": "00000000-0000-0000-0000-000000000002",
+    "licensePlate": "XYZ1344",
+    "date": "2024-09-10"
 
 }
 
 ###
-GET  {{url}}/reservations/4
+GET  {{url}}/reservations/eec6ef8c-baa1-49f9-98ac-8634a6e92079
 
 ###
-PUT  {{url}}/reservations/4
+PUT  {{url}}/reservations/eec6ef8c-baa1-49f9-98ac-8634a6e92079
 Content-Type: application/json
 
 {
-    "employeeName": "John Doe",
-    "parkingSpotName": "P1",
-    "licensePlate": "NewPlate"
+
+    "licensePlate": "NePlate"
 
 }
 
 ###
-DELETE   {{url}}/reservations/4
+DELETE   {{url}}/reservations/a2cd265e-9a89-4e07-b8b9-90acacb1cc31
+
+###
+ http://server/reservations/a2cd265e-9a89-4e07-b8b9-90acacb1cc31
