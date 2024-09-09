@@ -15,7 +15,7 @@ public class Reservation
     public Date Date { get; private set; }
 
 
-    public Reservation(Guid id, Guid parkingSpotId, string employeeName, LicensePlate licensePlate, DateTimeOffset date)
+    public Reservation(Guid id, Guid parkingSpotId, string employeeName, LicensePlate licensePlate, Date date)
     {
         Id = id;
         ParkingSpotId = parkingSpotId;

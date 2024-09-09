@@ -7,6 +7,8 @@ WORKDIR /app
 # Copy the solution and project files
 COPY ./MySpot.sln ./
 COPY ./src/MySpot.Api/MySpot.Api.csproj ./src/MySpot.Api/
+COPY ./tests/MySpot.Tests.Unit/MySpot.Tests.Unit.csproj ./tests/MySpot.Tests.Unit/
+
 
 # Restore dependencies
 RUN dotnet restore
