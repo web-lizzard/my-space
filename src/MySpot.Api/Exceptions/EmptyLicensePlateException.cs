@@ -6,3 +6,5 @@ public sealed class EmptyLicensePlateException : CustomException
     {
     }
 }
+
+

@@ -1,4 +1,6 @@
 @url = http://server:80
+@reservation_id = c5ebee86-dbb5-4002-9ce9-dc903bc4ba93
+@spot_id = 00000000-0000-0000-0000-000000000001
 
 ###
 GET {{url}}/reservations
@@ -10,17 +12,17 @@ Content-Type: application/json
 
 {
     "employeeName": "John Doe",
-    "parkingSpotId": "00000000-0000-0000-0000-000000000002",
+    "parkingSpotId": "{{spot_id}}",
     "licensePlate": "XYZ1344",
-    "date": "2024-09-10"
+    "date": "2024-09-12"
 
 }
 
 ###
-GET  {{url}}/reservations/eec6ef8c-baa1-49f9-98ac-8634a6e92079
+GET  {{url}}/reservations/{{reservation_id}}
 
 ###
-PUT  {{url}}/reservations/eec6ef8c-baa1-49f9-98ac-8634a6e92079
+PUT  {{url}}/reservations/{{reservation_id}}
 Content-Type: application/json
 
 {
@@ -30,7 +32,10 @@ Content-Type: application/json
 }
 
 ###
-DELETE   {{url}}/reservations/a2cd265e-9a89-4e07-b8b9-90acacb1cc31
+DELETE   {{url}}/reservations/{{reservation_id}}
 
 ###
- http://server/reservations/a2cd265e-9a89-4e07-b8b9-90acacb1cc31
+DELETE http://server/reservations/0a4cd397-dec6-403d-b925-3c413561eb86
+
+###
+GET http://server/reservations/7064d68c-6808-431c-a311-370415253b4c

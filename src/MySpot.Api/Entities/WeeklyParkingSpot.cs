@@ -1,30 +1,30 @@
 using MySpot.Api.Exceptions;
+using MySpot.Api.ValueObjects;
 
 namespace MySpot.Api.Entities;
 
 
-public class WeeklyParkingSpot(Guid id, DateTime from, DateTime to, string name)
+public class WeeklyParkingSpot(Guid id, Week week, string name)
 {
     private readonly HashSet<Reservation> _reservations = [];
 
-    public Guid Id { get; } = id;
-    public DateTime From { get; } = from;
-    public DateTime To { get; } = to;
+    public ParkingSpotId Id { get; } = id;
+    public Week Week { get; } = week;
     public string Name { get; } = name;
     public IEnumerable<Reservation> Reservations => _reservations;
 
 
-    public void AddReservation(Reservation reservation)
+    public void AddReservation(Reservation reservation, Date now)
     {
-        var isInvalidDate = reservation.Date.Date < From ||
-                            reservation.Date.Date > To ||
-                            reservation.Date.Date < DateTime.UtcNow.Date;
+        var isInvalidDate = reservation.Date < Week.From ||
+                            reservation.Date > Week.To ||
+                            reservation.Date < now;
         if (isInvalidDate)
         {
-            throw new InvalidReservationDateException(reservation.Date);
+            throw new InvalidReservationDateException(reservation.Date.Value.Date);
         }
 
-        var isAlreadyExists = _reservations.Any(r => r.Date.Date == reservation.Date.Date);
+        var isAlreadyExists = _reservations.Any(r => r.Date == reservation.Date);
 
         if (isAlreadyExists)
         {
