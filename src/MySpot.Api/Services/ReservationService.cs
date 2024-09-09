@@ -9,18 +9,19 @@ public class ReservationService
 {
 
     private static Clock _clock = new();
-    private static readonly List<WeeklyParkingSpot> weeklyParkingSpots = [
-       new WeeklyParkingSpot(Guid.Parse("00000000-0000-0000-0000-000000000001"), new Week(_clock.Current()), "P1" ),
-       new WeeklyParkingSpot(Guid.Parse("00000000-0000-0000-0000-000000000002"), new Week(_clock.Current()), "P2" ),
-       new WeeklyParkingSpot(Guid.Parse("00000000-0000-0000-0000-000000000003"), new Week(_clock.Current()), "P3" ),
-       new WeeklyParkingSpot(Guid.Parse("00000000-0000-0000-0000-000000000004"), new Week(_clock.Current()), "P4" ),
-       new WeeklyParkingSpot(Guid.Parse("00000000-0000-0000-0000-000000000005"), new Week(_clock.Current()), "P5" ),
-    ];
+
+    private readonly List<WeeklyParkingSpot> _weeklyParkingSpots;
+
+
+    public ReservationService(List<WeeklyParkingSpot> weeklyParkingSpots)
+    {
+        _weeklyParkingSpots = weeklyParkingSpots;
+    }
 
 
     public ReservationDto? FindById(Guid id) => FindAllWeekly().SingleOrDefault(reservation => reservation.Id == id);
 
-    public IEnumerable<ReservationDto> FindAllWeekly() => weeklyParkingSpots.SelectMany(spot => spot.Reservations).Select(reservation => new ReservationDto
+    public IEnumerable<ReservationDto> FindAllWeekly() => _weeklyParkingSpots.SelectMany(spot => spot.Reservations).Select(reservation => new ReservationDto
     {
         Id = reservation.Id,
         ParkingSpotId = reservation.ParkingSpotId,
@@ -30,7 +31,7 @@ public class ReservationService
 
     public Guid? Create(CreateReservation command)
     {
-        var weeklyParkingSpot = weeklyParkingSpots.SingleOrDefault(spot => spot.Id == new ParkingSpotId(command.ParkingSpotId));
+        var weeklyParkingSpot = _weeklyParkingSpots.SingleOrDefault(spot => spot.Id == new ParkingSpotId(command.ParkingSpotId));
 
         if (weeklyParkingSpot is null)
         {
@@ -82,6 +83,6 @@ public class ReservationService
     }
 
 
-    private Reservation? FindReservation(ReservationId id) => weeklyParkingSpots.SelectMany(spot => spot.Reservations).SingleOrDefault(reservation => reservation.Id == id);
-    private WeeklyParkingSpot? FindWeeklySpotByReservation(ReservationId reservationId) => weeklyParkingSpots.SingleOrDefault(spot => spot.Reservations.Any(reservation => reservation.Id == reservationId));
+    private Reservation? FindReservation(ReservationId id) => _weeklyParkingSpots.SelectMany(spot => spot.Reservations).SingleOrDefault(reservation => reservation.Id == id);
+    private WeeklyParkingSpot? FindWeeklySpotByReservation(ReservationId reservationId) => _weeklyParkingSpots.SingleOrDefault(spot => spot.Reservations.Any(reservation => reservation.Id == reservationId));
 }
