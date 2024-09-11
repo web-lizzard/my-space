@@ -6,7 +6,12 @@ WORKDIR /app
 
 # Copy the solution and project files
 COPY ./MySpot.sln ./
+
+COPY ./src/MySpot.Core/MySpot.Core.csproj ./src/MySpot.Core/
+COPY ./src/MySpot.Application/MySpot.Application.csproj ./src/MySpot.Application/
+COPY ./src/MySpot.Infrastructure/MySpot.Infrastructure.csproj ./src/MySpot.Infrastructure/
 COPY ./src/MySpot.Api/MySpot.Api.csproj ./src/MySpot.Api/
+
 COPY ./tests/MySpot.Tests.Unit/MySpot.Tests.Unit.csproj ./tests/MySpot.Tests.Unit/
 
 

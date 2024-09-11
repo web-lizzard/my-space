@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
-using MySpot.Api.Commands;
-using MySpot.Api.DTO;
-using MySpot.Api.Services;
+using MySpot.Application.Commands;
+using MySpot.Application.DTO;
+using MySpot.Application.Services;
 
 namespace MySpot.Api.Controllers;
 
@@ -9,11 +9,14 @@ namespace MySpot.Api.Controllers;
 [ApiController]
 [Route("reservations")]
 public class ReservationController : ControllerBase
+
+
 {
 
-    private readonly ReservationService Service;
+    private readonly IReservationService Service;
 
-    public ReservationController(ReservationService service)
+
+    public ReservationController(IReservationService service)
     {
         Service = service;
     }

@@ -1,6 +1,7 @@
-using MySpot.Api.Commands;
-using MySpot.Api.Repositories;
-using MySpot.Api.Services;
+using MySpot.Application.Commands;
+using MySpot.Application.Services;
+using MySpot.Application.Time;
+using MySpot.Core.Repositories;
 using MySpot.Tests.Unit.Shared;
 using Shouldly;
 
@@ -29,7 +30,7 @@ public class ReservationServiceTests
         reservationId.Value.ShouldBe(command.ReservationId);
     }
 
-    private readonly ReservationService _service;
+    private readonly IReservationService _service;
 
     public ReservationServiceTests()
     {
