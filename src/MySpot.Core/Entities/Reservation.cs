@@ -5,8 +5,8 @@ namespace MySpot.Core.Entities;
 public class Reservation
 
 {
-    public ReservationId Id { get; }
-    public ParkingSpotId ParkingSpotId { get; }
+    public ReservationId Id { get; private set; }
+    public ParkingSpotId ParkingSpotId { get; private set; }
     public EmployeeName EmployeeName { get; private set; }
 
     public LicensePlate LicensePlate { get; private set; }
@@ -14,6 +14,7 @@ public class Reservation
     public Date Date { get; private set; }
 
 
+    public Reservation() { }
     public Reservation(Guid id, Guid parkingSpotId, string employeeName, LicensePlate licensePlate, Date date)
     {
         Id = id;

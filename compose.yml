@@ -10,3 +10,22 @@ services:
         target: /app
     environment:
       - DOTNET_USE_POLLING_FILE_WATCHER=1
+  postgres:
+    image: postgres:16.4
+    shm_size: "1gb"
+    restart: unless-stopped
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_PASSWORD: example
+    volumes:
+      - postgres:/var/lib/postgresql/data
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 7020:8080
+
+volumes:
+  postgres:

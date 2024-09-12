@@ -22,4 +22,13 @@ class TestWeeklyRepository : IWeeklyParkingSpotRepository
     {
         return spots.First();
     }
+
+    public void Save(WeeklyParkingSpot spot)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void Update(WeeklyParkingSpot spot)
+    {
+    }
 }

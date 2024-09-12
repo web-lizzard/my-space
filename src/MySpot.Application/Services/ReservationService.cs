@@ -41,27 +41,31 @@ public class ReservationService : IReservationService
 
         var reservation = new Reservation(command.ReservationId, command.ParkingSpotId, command.EmployeeName, command.LicensePlate, command.Date);
         weeklyParkingSpot.AddReservation(reservation, new Date(_clock.Current()));
-
+        _repository.Update(weeklyParkingSpot);
         return reservation.Id;
     }
 
 
     public bool Update(UpdateReservationLicensePlate command)
     {
-        var existingReservation = FindReservation(command.id);
+        var weeklyParkingSpot = FindWeeklySpotByReservation(command.id);
 
-        if (existingReservation == null)
+        if (weeklyParkingSpot == null)
         {
             return false;
         }
 
-        if (existingReservation.Date <= new Date(_clock.Current()))
+        var reservartionToUpdate = weeklyParkingSpot.Reservations.SingleOrDefault(reservation => reservation.Id == new ReservationId(command.id));
+
+
+
+        if (reservartionToUpdate == null || reservartionToUpdate.Date <= new Date(_clock.Current()))
         {
             return false;
         }
 
-        existingReservation.ChangeLicensePlate(command.LicensePlate);
-
+        reservartionToUpdate.ChangeLicensePlate(command.LicensePlate);
+        _repository.Update(weeklyParkingSpot);
         return true;
     }
 
@@ -79,11 +83,11 @@ public class ReservationService : IReservationService
             return false;
         }
         parkingSpot.RemoveReservation(reservation);
+        _repository.Update(parkingSpot);
 
         return true;
     }
 
 
-    private Reservation? FindReservation(ReservationId id) => _repository.FindAll().SelectMany(spot => spot.Reservations).SingleOrDefault(reservation => reservation.Id == id);
     private WeeklyParkingSpot? FindWeeklySpotByReservation(ReservationId reservationId) => _repository.FindAll().SingleOrDefault(spot => spot.Reservations.Any(reservation => reservation.Id == reservationId));
 }

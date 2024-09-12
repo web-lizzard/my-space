@@ -1,5 +1,5 @@
 @url = http://server:80
-@reservation_id = 6a7f7323-5eba-4be5-8403-05f0e4696e0c
+@reservation_id = 08f88a98-3c8a-41ca-81d4-d0d5f23d2ad6
 @spot_id = 00000000-0000-0000-0000-000000000001
 
 ###
@@ -14,7 +14,7 @@ Content-Type: application/json
     "employeeName": "John Doe",
     "parkingSpotId": "{{spot_id}}",
     "licensePlate": "XYZ1344",
-    "date": "2024-09-12"
+    "date": "2024-09-13"
 
 }
 

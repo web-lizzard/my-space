@@ -14,6 +14,8 @@ COPY ./src/MySpot.Api/MySpot.Api.csproj ./src/MySpot.Api/
 
 COPY ./tests/MySpot.Tests.Unit/MySpot.Tests.Unit.csproj ./tests/MySpot.Tests.Unit/
 
+RUN dotnet tool install --global dotnet-ef
+ENV PATH="$PATH:/root/.dotnet/tools"
 
 # Restore dependencies
 RUN dotnet restore

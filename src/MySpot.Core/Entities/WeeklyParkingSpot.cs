@@ -4,13 +4,21 @@ using MySpot.Core.ValueObjects;
 namespace MySpot.Core.Entities;
 
 
-public class WeeklyParkingSpot(Guid id, Week week, string name)
+public class WeeklyParkingSpot
 {
     private readonly HashSet<Reservation> _reservations = [];
 
-    public ParkingSpotId Id { get; } = id;
-    public Week Week { get; } = week;
-    public string Name { get; } = name;
+    public WeeklyParkingSpot() { }
+    public WeeklyParkingSpot(Guid id, Week week, string name)
+    {
+        Id = id;
+        Week = week;
+        Name = name;
+    }
+
+    public ParkingSpotId Id { get; set; }
+    public Week Week { get; set; }
+    public string Name { get; set; }
     public IEnumerable<Reservation> Reservations => _reservations;
 
 

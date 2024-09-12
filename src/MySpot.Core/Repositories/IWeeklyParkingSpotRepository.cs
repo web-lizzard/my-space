@@ -10,4 +10,8 @@ public interface IWeeklyParkingSpotRepository
 
     public IEnumerable<WeeklyParkingSpot> FindAll();
 
+    public void Save(WeeklyParkingSpot spot);
+
+    public void Update(WeeklyParkingSpot spot);
+
 }

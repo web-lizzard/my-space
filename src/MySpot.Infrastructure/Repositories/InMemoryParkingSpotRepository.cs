@@ -30,4 +30,11 @@ internal class InMemoryWeeklyParkingSpotRepository : IWeeklyParkingSpotRepositor
     {
         return _weeklyParkingSpots.SingleOrDefault(spot => spot.Id == new ParkingSpotId(id));
     }
+
+    public void Save(WeeklyParkingSpot spot)
+    {
+
+    }
+
+    public void Update(WeeklyParkingSpot spot) { }
 }
