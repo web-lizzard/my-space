@@ -3,7 +3,7 @@ namespace MySpot.Infrastructure.DAL;
 using Microsoft.EntityFrameworkCore;
 using MySpot.Core.Entities;
 
-public sealed class MySpotDbContext(DbContextOptions<MySpotDbContext> dbContextOptions) : DbContext(dbContextOptions)
+internal sealed class MySpotDbContext(DbContextOptions<MySpotDbContext> dbContextOptions) : DbContext(dbContextOptions)
 {
 
     public DbSet<Reservation> Reservations { get; set; }
