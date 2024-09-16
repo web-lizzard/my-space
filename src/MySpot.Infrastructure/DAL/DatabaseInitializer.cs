@@ -7,7 +7,7 @@ using MySpot.Core.ValueObjects;
 namespace MySpot.Infrastructure.DAL;
 
 
-internal sealed class DatabaseInitilizer(IClock clock, MySpotDbContext dbContext) : IHostedService
+internal sealed class DatabaseInitializer(IClock clock, MySpotDbContext dbContext) : IHostedService
 {
     private readonly IClock _clock = clock;
     private readonly MySpotDbContext _dbContext = dbContext;

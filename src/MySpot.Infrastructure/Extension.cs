@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MySpot.Application.Time;
 using MySpot.Core.Repositories;
@@ -9,10 +10,10 @@ namespace MySpot.Infrastructure;
 public static class Extension
 {
 
-    public static IServiceCollection AddInfrastructure(this IServiceCollection services)
+    public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddSingleton<IClock, Clock>();
-        services.AddPostgres();
+        services.AddPostgres(configuration);
         return services;
 
     }

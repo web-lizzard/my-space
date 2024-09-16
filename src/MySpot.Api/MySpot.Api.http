@@ -14,7 +14,7 @@ Content-Type: application/json
     "employeeName": "John Doe",
     "parkingSpotId": "{{spot_id}}",
     "licensePlate": "XYZ1344",
-    "date": "2024-09-13"
+    "date": "2024-09-16"
 
 }
 
