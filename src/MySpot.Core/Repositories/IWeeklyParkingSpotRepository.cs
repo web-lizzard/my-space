@@ -6,12 +6,12 @@ namespace MySpot.Core.Repositories;
 public interface IWeeklyParkingSpotRepository
 {
 
-    public WeeklyParkingSpot? FindById(Guid id);
+    public Task<WeeklyParkingSpot?> FindById(Guid id);
 
-    public IEnumerable<WeeklyParkingSpot> FindAll();
+    public Task<IEnumerable<WeeklyParkingSpot>> FindAll();
 
-    public void Save(WeeklyParkingSpot spot);
+    Task Save(WeeklyParkingSpot spot);
 
-    public void Update(WeeklyParkingSpot spot);
+    public Task Update(WeeklyParkingSpot spot);
 
 }

@@ -9,23 +9,27 @@ internal sealed class SQLWeeklyParkingSpotRepository(MySpotDbContext dbContext) 
 {
     private readonly MySpotDbContext _dbContext = dbContext;
 
-    public IEnumerable<WeeklyParkingSpot> FindAll() => _dbContext.WeeklyParkingSpots.Include(spot => spot.Reservations).ToList();
-
-    public WeeklyParkingSpot? FindById(Guid id)
+    async public Task<IEnumerable<WeeklyParkingSpot>> FindAll()
     {
-        return _dbContext.WeeklyParkingSpots.Include(spot => spot.Reservations).SingleOrDefault(spot => spot.Id == new ParkingSpotId(id));
+        var list = await _dbContext.WeeklyParkingSpots.Include(spot => spot.Reservations).ToListAsync();
+        return list.AsEnumerable();
     }
 
-    public void Save(WeeklyParkingSpot spot)
+    public Task<WeeklyParkingSpot?> FindById(Guid id)
     {
-        _dbContext.Add(spot);
-        _dbContext.SaveChanges();
+        return _dbContext.WeeklyParkingSpots.Include(spot => spot.Reservations).SingleOrDefaultAsync(spot => spot.Id == new ParkingSpotId(id));
     }
 
-    public void Update(WeeklyParkingSpot spot)
+    async public Task Save(WeeklyParkingSpot spot)
+    {
+        await _dbContext.AddAsync(spot);
+        await _dbContext.SaveChangesAsync();
+    }
+
+    public async Task Update(WeeklyParkingSpot spot)
     {
         _dbContext.Update(spot);
-        _dbContext.SaveChanges();
+        await _dbContext.SaveChangesAsync();
     }
 
 }

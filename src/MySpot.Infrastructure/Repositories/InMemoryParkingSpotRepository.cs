@@ -21,20 +21,23 @@ internal class InMemoryWeeklyParkingSpotRepository : IWeeklyParkingSpotRepositor
     };
     }
 
-    public IEnumerable<WeeklyParkingSpot> FindAll()
+    public Task<IEnumerable<WeeklyParkingSpot>> FindAll()
     {
-        return _weeklyParkingSpots;
+        return Task.FromResult(_weeklyParkingSpots);
     }
 
-    public WeeklyParkingSpot? FindById(Guid id)
+    public Task<WeeklyParkingSpot?> FindById(Guid id)
     {
-        return _weeklyParkingSpots.SingleOrDefault(spot => spot.Id == new ParkingSpotId(id));
+        return Task.FromResult(_weeklyParkingSpots.SingleOrDefault(spot => spot.Id == new ParkingSpotId(id)));
     }
 
-    public void Save(WeeklyParkingSpot spot)
+    public Task Save(WeeklyParkingSpot spot)
     {
-
+        return Task.CompletedTask;
     }
 
-    public void Update(WeeklyParkingSpot spot) { }
+    public Task Update(WeeklyParkingSpot spot)
+    {
+        return Task.CompletedTask;
+    }
 }
