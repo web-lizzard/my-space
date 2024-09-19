@@ -20,7 +20,7 @@ public class ReservationController : ControllerBase
     }
 
     [HttpGet]
-    public ActionResult<IEnumerable<ReservationDto>> Get() => Ok(Service.FindAllWeekly());
+    async public Task<ActionResult<IEnumerable<ReservationDto>>> Get() => Ok(await Service.FindAllWeekly());
 
     [HttpGet(template: "{id:Guid}")]
     async public Task<ActionResult<ReservationDto>> Get(Guid id)
