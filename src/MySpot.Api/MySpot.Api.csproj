@@ -18,6 +18,7 @@
   <ItemGroup>
     <ProjectReference Include="..\MySpot.Core\MySpot.Core.csproj" />
     <ProjectReference Include="..\MySpot.Application\MySpot.Application.csproj" />
+    <ProjectReference Include="..\MySpot.Core\MySpot.Core.csproj" />
     <ProjectReference Include="..\MySpot.Infrastructure\MySpot.Infrastructure.csproj" />
   </ItemGroup>
 

@@ -1,4 +1,5 @@
-using MySpot.Application.Time;
+
+using MySpot.Core.Time;
 
 namespace MySpot.Tests.Unit.Shared;
 

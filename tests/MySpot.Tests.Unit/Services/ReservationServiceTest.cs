@@ -1,7 +1,7 @@
 using MySpot.Application.Commands;
 using MySpot.Application.Services;
-using MySpot.Application.Time;
 using MySpot.Core.Repositories;
+using MySpot.Core.Time;
 using MySpot.Tests.Unit.Shared;
 using Shouldly;
 
@@ -13,9 +13,9 @@ public class ReservationServiceTests
     private static readonly IClock Clock = new TestClock();
     private readonly IWeeklyParkingSpotRepository repository = new TestWeeklyRepository();
     [Fact]
-    public void given_reservation__for_not_taken_date_add_reservation_shoould_succed()
+    async public void given_reservation__for_not_taken_date_add_reservation_shoould_succed()
     {
-        var parkingSpot = repository.FindAll().First();
+        var parkingSpot = (await repository.FindAll()).First();
         var command = new CreateReservation(
             parkingSpot.Id,
             Guid.NewGuid(),
@@ -24,7 +24,7 @@ public class ReservationServiceTests
             Clock.Current().AddMinutes(4)
         );
 
-        var reservationId = _service.Create(command);
+        var reservationId = await _service.Create(command);
 
         reservationId.ShouldNotBeNull();
         reservationId.Value.ShouldBe(command.ReservationId);

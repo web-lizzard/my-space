@@ -1,5 +1,5 @@
 
-using MySpot.Application.Time;
+using MySpot.Core.Time;
 
 namespace MySpot.Infrastructure.Time;
 

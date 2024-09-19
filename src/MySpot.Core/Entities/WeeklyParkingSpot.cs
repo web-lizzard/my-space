@@ -22,7 +22,7 @@ public class WeeklyParkingSpot
     public IEnumerable<Reservation> Reservations => _reservations;
 
 
-    public void AddReservation(Reservation reservation, Date now)
+    internal void AddReservation(Reservation reservation, Date now)
     {
         Console.WriteLine(Week.ToString());
         var isInvalidDate = reservation.Date < Week.From ||

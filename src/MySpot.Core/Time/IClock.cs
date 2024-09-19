@@ -1,4 +1,4 @@
-namespace MySpot.Application.Time;
+namespace MySpot.Core.Time;
 
 public interface IClock
 {

@@ -11,13 +11,24 @@ internal sealed class SQLWeeklyParkingSpotRepository(MySpotDbContext dbContext) 
 
     async public Task<IEnumerable<WeeklyParkingSpot>> FindAll()
     {
-        var list = await _dbContext.WeeklyParkingSpots.Include(spot => spot.Reservations).ToListAsync();
-        return list.AsEnumerable();
+        return await _dbContext.WeeklyParkingSpots
+            .Include(spot => spot.Reservations)
+            .ToListAsync();
+    }
+
+    async public Task<IEnumerable<WeeklyParkingSpot>> FindAllByWeek(Week week)
+    {
+        return await _dbContext.WeeklyParkingSpots
+            .Include(spot => spot.Reservations)
+            .Where(spot => spot.Week == week)
+            .ToListAsync();
     }
 
     public Task<WeeklyParkingSpot?> FindById(Guid id)
     {
-        return _dbContext.WeeklyParkingSpots.Include(spot => spot.Reservations).SingleOrDefaultAsync(spot => spot.Id == new ParkingSpotId(id));
+        return _dbContext.WeeklyParkingSpots
+            .Include(spot => spot.Reservations)
+            .SingleOrDefaultAsync(spot => spot.Id == new ParkingSpotId(id));
     }
 
     async public Task Save(WeeklyParkingSpot spot)
