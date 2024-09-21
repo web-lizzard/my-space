@@ -48,7 +48,7 @@ public class ReservationService(IClock clock, IWeeklyParkingSpotRepository repos
             return default;
         }
 
-        var reservation = new VehicleReservation(command.ReservationId, command.ParkingSpotId, command.EmployeeName, command.LicensePlate, new Date(command.Date));
+        var reservation = new VehicleReservation(command.ReservationId, command.ParkingSpotId, command.EmployeeName, command.LicensePlate, new Date(command.Date), command.Capacity);
         _reservationService.ReserveSpotForVehicle(allParkingSpots, JobTitle.Employee, parkingSpotToReserved, reservation);
         await _repository.Update(parkingSpotToReserved);
         return reservation.Id;

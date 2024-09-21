@@ -8,19 +8,27 @@ public class WeeklyParkingSpot
 {
     private readonly HashSet<Reservation> _reservations = [];
 
-    public WeeklyParkingSpot() { }
-    public WeeklyParkingSpot(Guid id, Week week, string name)
-    {
-        Id = id;
-        Week = week;
-        Name = name;
-    }
+    public const int MaxCapacity = 2;
 
     public ParkingSpotId Id { get; set; }
     public Week Week { get; set; }
     public string Name { get; set; }
+    public Capacity Capacity { get; private set; }
     public IEnumerable<Reservation> Reservations => _reservations;
 
+    public WeeklyParkingSpot() { }
+
+    public static WeeklyParkingSpot Create(Guid id, Week week, string name)
+    {
+        return new WeeklyParkingSpot(id, week, name, MaxCapacity);
+    }
+    private WeeklyParkingSpot(Guid id, Week week, string name, Capacity capacity)
+    {
+        Id = id;
+        Week = week;
+        Name = name;
+        Capacity = capacity;
+    }
 
     internal void AddReservation(Reservation reservation, Date now)
     {
@@ -32,11 +40,13 @@ public class WeeklyParkingSpot
             throw new InvalidReservationDateException(reservation.Date.Value.Date);
         }
 
-        var isAlreadyExists = _reservations.Any(r => r.Date == reservation.Date);
+        var dateCapacity = Reservations
+                .Where(reservation => reservation.Date == reservation.Date)
+                .Sum(reservation => reservation.Capacity);
 
-        if (isAlreadyExists)
+        if (dateCapacity + reservation.Capacity > Capacity)
         {
-            throw new ParkingSpotAlreadyReserverdException(Name, reservation.Date);
+            throw new ParkingSpotCapacityExceededException(Id);
         }
 
         _reservations.Add(reservation);
@@ -55,4 +65,3 @@ public class WeeklyParkingSpot
 
 
 }
-

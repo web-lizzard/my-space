@@ -11,7 +11,7 @@ class TestWeeklyRepository : IWeeklyParkingSpotRepository
     private static IClock clock = new TestClock();
     private readonly IEnumerable<WeeklyParkingSpot> spots = new List<WeeklyParkingSpot>
     {
-        new WeeklyParkingSpot(Guid.Parse("00000000-0000-0000-0000-000000000001"), new Week(clock.Current()), "P1" ),
+         WeeklyParkingSpot.Create(Guid.Parse("00000000-0000-0000-0000-000000000001"), new Week(clock.Current()), "P1" ),
     };
     public Task<IEnumerable<WeeklyParkingSpot>> FindAll()
     {

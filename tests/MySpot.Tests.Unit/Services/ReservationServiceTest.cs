@@ -4,6 +4,7 @@ using MySpot.Core.Policies;
 using MySpot.Core.Repositories;
 using MySpot.Core.Services;
 using MySpot.Core.Time;
+using MySpot.Core.ValueObjects;
 using MySpot.Tests.Unit.Shared;
 using Shouldly;
 
@@ -23,7 +24,8 @@ public class ReservationServiceTests
             Guid.NewGuid(),
             "John Doe",
             "XYZ123",
-            Clock.Current().AddMinutes(4)
+            Clock.Current().AddMinutes(4),
+            new Capacity(2)
         );
 
         var reservationId = await _service.ReserveForVehicle(command);
