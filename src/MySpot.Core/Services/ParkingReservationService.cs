@@ -10,7 +10,19 @@ internal sealed class ParkingReservationService(IEnumerable<IReservationPolicy> 
     private readonly IEnumerable<IReservationPolicy> _policies = policies;
     private readonly IClock _clock = clock;
 
-    public void ReservedSpotForVehicle(IEnumerable<WeeklyParkingSpot> allParkingSpots, JobTitle jobTite, WeeklyParkingSpot weeklyParkingSpotToReserve, Reservation reservation)
+    public void ReserveParkingForCleaning(IEnumerable<WeeklyParkingSpot> allParkngSpots, Date date)
+    {
+        foreach (var parkingSpot in allParkngSpots)
+        {
+            var reservationsForTheSameDate = parkingSpot.Reservations.Where(reservation => reservation.Date == date);
+            parkingSpot.RemoveReservations(reservationsForTheSameDate);
+
+            var cleaningReservation = new CleaningReservation(ReservationId.Create(), parkingSpot.Id, date);
+            parkingSpot.AddReservation(cleaningReservation, new Date(_clock.Current()));
+        }
+    }
+
+    public void ReserveSpotForVehicle(IEnumerable<WeeklyParkingSpot> allParkingSpots, JobTitle jobTite, WeeklyParkingSpot weeklyParkingSpotToReserve, VehicleReservation reservation)
     {
         var parkingSpotId = weeklyParkingSpotToReserve.Id;
         var policy = _policies.SingleOrDefault(p => p.CanBeApplied(jobTite)) ?? throw new NoReservationPolicyException(jobTite);

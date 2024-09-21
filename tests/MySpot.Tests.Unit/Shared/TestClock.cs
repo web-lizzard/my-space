@@ -6,5 +6,5 @@ namespace MySpot.Tests.Unit.Shared;
 
 class TestClock : IClock
 {
-    public DateTime Current() => new(2022, 08, 11);
+    public DateTime Current() => new(2022, 08, 11, 16, 0, 0);
 }

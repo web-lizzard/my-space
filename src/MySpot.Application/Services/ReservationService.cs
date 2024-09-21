@@ -30,15 +30,16 @@ public class ReservationService(IClock clock, IWeeklyParkingSpotRepository repos
             Id = reservation.Id,
             ParkingSpotId = reservation.ParkingSpotId,
             Date = reservation.Date,
-            LicensePlate = reservation.LicensePlate
+            LicensePlate = reservation is VehicleReservation vr ? vr.LicensePlate : string.Empty,
 
         });
     }
 
-    async public Task<Guid?> Create(CreateReservation command)
+    async public Task<Guid?> ReserveForVehicle(ReserveParkingSpotForVehicle command)
     {
         var week = new Week(_clock.Current());
         var allParkingSpots = await _repository.FindAllByWeek(week);
+        var spor = await _repository.FindAll();
         var parkingSpotToReserved = allParkingSpots.SingleOrDefault(x => x.Id == new ParkingSpotId(command.ParkingSpotId));
 
 
@@ -47,14 +48,26 @@ public class ReservationService(IClock clock, IWeeklyParkingSpotRepository repos
             return default;
         }
 
-        var reservation = new Reservation(command.ReservationId, command.ParkingSpotId, command.EmployeeName, command.LicensePlate, command.Date);
-        _reservationService.ReservedSpotForVehicle(allParkingSpots, JobTitle.Employee, parkingSpotToReserved, reservation);
+        var reservation = new VehicleReservation(command.ReservationId, command.ParkingSpotId, command.EmployeeName, command.LicensePlate, new Date(command.Date));
+        _reservationService.ReserveSpotForVehicle(allParkingSpots, JobTitle.Employee, parkingSpotToReserved, reservation);
         await _repository.Update(parkingSpotToReserved);
         return reservation.Id;
     }
 
+    async public Task ReserveForCleaning(ReserveParkingSpotForCleaning command)
+    {
+        var date = new Date(command.Date);
+        var allParkingSpots = await _repository.FindAllByWeek(new Week(date));
+        _reservationService.ReserveParkingForCleaning(allParkingSpots, date);
 
-    async public Task<bool> Update(UpdateReservationLicensePlate command)
+        foreach (var spot in allParkingSpots)
+        {
+            await _repository.Update(spot);
+        }
+    }
+
+
+    async public Task<bool> Update(UpdateReservationLicensePlateForVehicle command)
     {
         var weeklyParkingSpot = await FindWeeklySpotByReservation(command.id);
 
@@ -63,7 +76,7 @@ public class ReservationService(IClock clock, IWeeklyParkingSpotRepository repos
             return false;
         }
 
-        var reservartionToUpdate = weeklyParkingSpot.Reservations.SingleOrDefault(reservation => reservation.Id == new ReservationId(command.id));
+        var reservartionToUpdate = weeklyParkingSpot.Reservations.OfType<VehicleReservation>().SingleOrDefault(reservation => reservation.Id == new ReservationId(command.id));
 
         if (reservartionToUpdate == null || reservartionToUpdate.Date <= new Date(_clock.Current()))
         {

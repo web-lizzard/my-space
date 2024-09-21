@@ -19,7 +19,10 @@ internal sealed class RegularEmployeeReservationPolicy : IReservationPolicy
 
     public bool CanReserved(IEnumerable<WeeklyParkingSpot> weeklyParkingSpots, EmployeeName employeeName)
     {
-        var totalEmployeeReservations = weeklyParkingSpots.SelectMany(x => x.Reservations).Count(x => x.EmployeeName == employeeName);
+        var totalEmployeeReservations = weeklyParkingSpots
+                                .SelectMany(x => x.Reservations)
+                                .OfType<VehicleReservation>()
+                                .Count(r => r.EmployeeName == employeeName);
 
         return totalEmployeeReservations < 2 && _clock.Current().Hour > 4;
     }

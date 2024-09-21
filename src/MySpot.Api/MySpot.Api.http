@@ -7,15 +7,22 @@ GET {{url}}/reservations
 Accept: application/json
 
 ###
-POST {{url}}/reservations
+POST {{url}}/reservations/vehicle
 Content-Type: application/json
 
 {
     "employeeName": "John Doe",
     "parkingSpotId": "{{spot_id}}",
     "licensePlate": "XYZ1344",
-    "date": "2024-09-21"
+    "date": "2024-09-22"
 
+}
+###
+POST {{url}}/reservations/cleaning
+Content-Type: application/json
+
+{
+    "date": "2024-09-21"
 }
 
 ###

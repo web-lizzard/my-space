@@ -8,6 +8,11 @@ public sealed record ReservationId
         Id = id;
     }
 
+    public static ReservationId Create()
+    {
+        return new ReservationId(Guid.NewGuid());
+    }
+
     public static implicit operator Guid(ReservationId reservationId) => reservationId.Id;
     public static implicit operator ReservationId(Guid id) => new(id);
 

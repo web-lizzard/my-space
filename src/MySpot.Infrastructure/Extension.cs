@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using MySpot.Application.Time;
+using MySpot.Core.Time;
 using MySpot.Infrastructure.DAL;
 using MySpot.Infrastructure.Exceptions;
 using MySpot.Infrastructure.Time;
@@ -21,7 +21,7 @@ public static class Extension
 
     public static WebApplication UseInfrastructure(this WebApplication app)
     {
-        // app.UseMiddleware<ExceptionMiddleware>();
+        app.UseMiddleware<ExceptionMiddleware>();
         app.MapControllers();
 
         return app;

@@ -30,16 +30,23 @@ public class ReservationController : ControllerBase
         return reservation is null ? NotFound() : Ok(reservation);
     }
 
-    [HttpPost]
-    async public Task<ActionResult> Post(CreateReservation command)
+    [HttpPost("vehicle")]
+    async public Task<ActionResult> Post(ReserveParkingSpotForVehicle command)
     {
-        var id = await Service.Create(command with { ReservationId = Guid.NewGuid() });
-
+        var id = await Service.ReserveForVehicle(command with { ReservationId = Guid.NewGuid() });
         return id is not null ? CreatedAtAction(nameof(Get), new { id }, null) : BadRequest();
     }
 
+    [HttpPost("cleaning")]
+    async public Task<ActionResult> Post(ReserveParkingSpotForCleaning command)
+    {
+        await Service.ReserveForCleaning(command);
+
+        return Created();
+    }
+
     [HttpPut("{id:Guid}")]
-    public async Task<ActionResult> Put(Guid id, UpdateReservationLicensePlate command) => await Service.Update(command with { id = id }) ? NoContent() : NotFound();
+    public async Task<ActionResult> Put(Guid id, UpdateReservationLicensePlateForVehicle command) => await Service.Update(command with { id = id }) ? NoContent() : NotFound();
 
     [HttpDelete("{id:Guid}")]
     public async Task<ActionResult> Delete(Guid id) => await Service.Delete(new DeleteReservation(id)) ? NoContent() : NotFound();

@@ -1,4 +1,4 @@
 
 namespace MySpot.Application.Commands;
 
-public record UpdateReservationLicensePlate(Guid id, string LicensePlate);
+public record UpdateReservationLicensePlateForVehicle(Guid id, string LicensePlate);

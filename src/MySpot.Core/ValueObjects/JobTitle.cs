@@ -1,3 +1,4 @@
+namespace MySpot.Core.ValueObjects;
 public sealed record JobTitle
 {
     public string Value { get; }

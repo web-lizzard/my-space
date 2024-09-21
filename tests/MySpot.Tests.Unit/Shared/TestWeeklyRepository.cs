@@ -1,7 +1,7 @@
 
-using MySpot.Application.Time;
 using MySpot.Core.Entities;
 using MySpot.Core.Repositories;
+using MySpot.Core.Time;
 using MySpot.Core.ValueObjects;
 using MySpot.Tests.Unit.Shared;
 
@@ -13,22 +13,29 @@ class TestWeeklyRepository : IWeeklyParkingSpotRepository
     {
         new WeeklyParkingSpot(Guid.Parse("00000000-0000-0000-0000-000000000001"), new Week(clock.Current()), "P1" ),
     };
-    public IEnumerable<WeeklyParkingSpot> FindAll()
+    public Task<IEnumerable<WeeklyParkingSpot>> FindAll()
     {
-        return spots;
+        return Task.FromResult(spots);
     }
 
-    public WeeklyParkingSpot? FindById(Guid id)
+    public Task<IEnumerable<WeeklyParkingSpot>> FindAllByWeek(Week week)
     {
-        return spots.First();
+        return Task.FromResult(spots);
     }
 
-    public void Save(WeeklyParkingSpot spot)
+    public Task<WeeklyParkingSpot?> FindById(Guid id)
     {
-        throw new NotImplementedException();
+        return Task.FromResult(spots.FirstOrDefault());
     }
 
-    public void Update(WeeklyParkingSpot spot)
+    public Task Save(WeeklyParkingSpot spot)
     {
+        return Task.CompletedTask;
     }
+
+    public Task Update(WeeklyParkingSpot spot)
+    {
+        return Task.CompletedTask;
+    }
+
 }

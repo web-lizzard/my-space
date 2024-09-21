@@ -1,6 +1,8 @@
 using MySpot.Application.Commands;
 using MySpot.Application.Services;
+using MySpot.Core.Policies;
 using MySpot.Core.Repositories;
+using MySpot.Core.Services;
 using MySpot.Core.Time;
 using MySpot.Tests.Unit.Shared;
 using Shouldly;
@@ -16,7 +18,7 @@ public class ReservationServiceTests
     async public void given_reservation__for_not_taken_date_add_reservation_shoould_succed()
     {
         var parkingSpot = (await repository.FindAll()).First();
-        var command = new CreateReservation(
+        var command = new ReserveParkingSpotForVehicle(
             parkingSpot.Id,
             Guid.NewGuid(),
             "John Doe",
@@ -24,7 +26,7 @@ public class ReservationServiceTests
             Clock.Current().AddMinutes(4)
         );
 
-        var reservationId = await _service.Create(command);
+        var reservationId = await _service.ReserveForVehicle(command);
 
         reservationId.ShouldNotBeNull();
         reservationId.Value.ShouldBe(command.ReservationId);
@@ -34,7 +36,14 @@ public class ReservationServiceTests
 
     public ReservationServiceTests()
     {
-        _service = new ReservationService(Clock, repository);
+        var policies = new List<IReservationPolicy>()
+        {
+            new RegularEmployeeReservationPolicy(Clock),
+            new ManagerReservationPolicy(),
+            new BossReservationPolicy()
+        };
+        var parkingSpotReservationService = new ParkingReservationService(policies, Clock);
+        _service = new ReservationService(Clock, repository, parkingSpotReservationService);
     }
 
 }

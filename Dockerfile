@@ -17,6 +17,7 @@ RUN dotnet restore
 FROM core as dev
 
 RUN dotnet tool install --global dotnet-ef
+ENV PATH="$PATH:/root/.dotnet/tools"
 
 ENTRYPOINT ["dotnet", "watch", "--project", "src/MySpot.Api/MySpot.Api.csproj", "run", "--urls", "http://0.0.0.0:80"]
 

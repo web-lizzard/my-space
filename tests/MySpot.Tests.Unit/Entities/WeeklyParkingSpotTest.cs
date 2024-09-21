@@ -28,7 +28,7 @@ public class WeeklyParkingSpotTests
     public void given_invalid_date_add_reservation_should_fail(string dateString)
     {
         var invalidDate = DateTime.Parse(dateString);
-        var reservation = new Reservation(Guid.NewGuid(), _weeklyParkingSpot.Id, "test name", "xyz123", new Date(invalidDate));
+        var reservation = new VehicleReservation(Guid.NewGuid(), _weeklyParkingSpot.Id, "test name", "xyz123", new Date(invalidDate));
 
         var exception = Record.Exception(() => _weeklyParkingSpot.AddReservation(reservation, new Date(_currentDate)));
 
@@ -40,8 +40,8 @@ public class WeeklyParkingSpotTests
     public void given_reservation_for_already_existing_date_add_reservation_shoul_fail()
     {
         var reservationDate = _currentDate.AddDays(1);
-        var reservation = new Reservation(Guid.NewGuid(), _weeklyParkingSpot.Id, "John Doe", "XYS134", reservationDate);
-        var nextReservation = new Reservation(Guid.NewGuid(), _weeklyParkingSpot.Id, "John Doe", "XYS134", reservationDate);
+        var reservation = new VehicleReservation(Guid.NewGuid(), _weeklyParkingSpot.Id, "John Doe", "XYS134", reservationDate);
+        var nextReservation = new VehicleReservation(Guid.NewGuid(), _weeklyParkingSpot.Id, "John Doe", "XYS134", reservationDate);
 
         _weeklyParkingSpot.AddReservation(reservation, _currentDate);
 
@@ -55,7 +55,7 @@ public class WeeklyParkingSpotTests
     public void given_reservation__for_not_taken_date_add_reservation_shoould_succed()
     {
         var reservationDate = _currentDate.AddDays(1);
-        var reservation = new Reservation(Guid.NewGuid(), _weeklyParkingSpot.Id, "John Doe", "XYS134", reservationDate);
+        var reservation = new VehicleReservation(Guid.NewGuid(), _weeklyParkingSpot.Id, "John Doe", "XYS134", reservationDate);
 
         _weeklyParkingSpot.AddReservation(reservation, _currentDate);
 

@@ -1,6 +1,6 @@
-using MySpot.Application.Time;
 using MySpot.Core.Entities;
 using MySpot.Core.Repositories;
+using MySpot.Core.Time;
 using MySpot.Core.ValueObjects;
 
 namespace MySpot.Infrastructure.Repositories;
@@ -24,6 +24,11 @@ internal class InMemoryWeeklyParkingSpotRepository : IWeeklyParkingSpotRepositor
     public Task<IEnumerable<WeeklyParkingSpot>> FindAll()
     {
         return Task.FromResult(_weeklyParkingSpots);
+    }
+
+    public Task<IEnumerable<WeeklyParkingSpot>> FindAllByWeek(Week week)
+    {
+        return Task.FromResult(_weeklyParkingSpots.Where(spot => spot.Week == week));
     }
 
     public Task<WeeklyParkingSpot?> FindById(Guid id)

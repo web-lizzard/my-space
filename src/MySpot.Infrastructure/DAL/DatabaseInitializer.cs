@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
-using MySpot.Application.Time;
 using MySpot.Core.Entities;
+using MySpot.Core.Time;
 using MySpot.Core.ValueObjects;
 
 namespace MySpot.Infrastructure.DAL;
