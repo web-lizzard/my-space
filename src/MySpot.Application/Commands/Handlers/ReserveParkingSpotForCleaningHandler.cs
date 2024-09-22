@@ -17,9 +17,6 @@ public sealed class ReserveParkingSpotForCleaningHandler(
         var allParkingSpots = await _repository.FindAllByWeek(new Week(date));
         _reservationService.ReserveParkingForCleaning(allParkingSpots, date);
 
-        foreach (var spot in allParkingSpots)
-        {
-            await _repository.Update(spot);
-        }
+        await Task.WhenAll(allParkingSpots.Select(spot => _repository.Update(spot)));
     }
 }

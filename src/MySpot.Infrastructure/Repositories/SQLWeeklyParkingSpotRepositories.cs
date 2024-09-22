@@ -34,7 +34,6 @@ internal sealed class SQLWeeklyParkingSpotRepository(MySpotDbContext dbContext) 
     public Task<WeeklyParkingSpot?> FindWeeklySpotByReservation(ReservationId id)
     {
 
-        // (await _repository.FindAll()).SingleOrDefault(spot => spot.Reservations.Any(reservation => reservation.Id == reservationId));
         return _dbContext.WeeklyParkingSpots.Include(spot => spot.Reservations)
                                             .Where(spot => spot.Reservations.Any(reservation => reservation.Id == id))
                                             .FirstOrDefaultAsync();
@@ -43,13 +42,12 @@ internal sealed class SQLWeeklyParkingSpotRepository(MySpotDbContext dbContext) 
     async public Task Save(WeeklyParkingSpot spot)
     {
         await _dbContext.AddAsync(spot);
-        await _dbContext.SaveChangesAsync();
     }
 
-    public async Task Update(WeeklyParkingSpot spot)
+    public Task Update(WeeklyParkingSpot spot)
     {
         _dbContext.Update(spot);
-        await _dbContext.SaveChangesAsync();
+        return Task.CompletedTask;
     }
 
 }
