@@ -1,35 +1,31 @@
 @url = http://server:80
-@reservation_id = a54f2d4a-e010-40c9-9068-184086bf7531
-@spot_id = 00000000-0000-0000-0000-000000000001
+@reservation_id = 5c06971f-b821-46ce-8e03-76ec2680f9ec
+@spot_id = 00000000-0000-0000-0000-000000000004
 
 ###
-GET {{url}}/reservations
+GET {{url}}/parking-spots
 Accept: application/json
 
 ###
-POST {{url}}/reservations/vehicle
+POST {{url}}/parking-spots/{{spot_id}}/reservations/vehicle
 Content-Type: application/json
 
 {
-    "employeeName": "John Doe",
-    "parkingSpotId": "{{spot_id}}",
-    "licensePlate": "XYZ1344",
+    "employeeName": "Mark Doe",
+    "licensePlate": "plate",
+    "date": "2024-09-22",
+    "capacity": "1"
+}
+###
+POST {{url}}/parking-spots/reservations/cleaning
+Content-Type: application/json
+
+{
     "date": "2024-09-22"
-
-}
-###
-POST {{url}}/reservations/cleaning
-Content-Type: application/json
-
-{
-    "date": "2024-09-21"
 }
 
 ###
-GET  {{url}}/reservations/{{reservation_id}}
-
-###
-PUT  {{url}}/reservations/{{reservation_id}}
+PUT  {{url}}/parking-spots/reservations/{{reservation_id}}
 Content-Type: application/json
 
 {
@@ -39,7 +35,7 @@ Content-Type: application/json
 }
 
 ###
-DELETE   {{url}}/reservations/{{reservation_id}}
+DELETE   {{url}}/parking-spots/reservations/{{reservation_id}}
 
 ###
 DELETE http://server/reservations/0a4cd397-dec6-403d-b925-3c413561eb86

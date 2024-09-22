@@ -36,6 +36,11 @@ internal class InMemoryWeeklyParkingSpotRepository : IWeeklyParkingSpotRepositor
         return Task.FromResult(_weeklyParkingSpots.SingleOrDefault(spot => spot.Id == new ParkingSpotId(id)));
     }
 
+    public Task<WeeklyParkingSpot?> FindWeeklySpotByReservation(ReservationId Id)
+    {
+        throw new NotImplementedException();
+    }
+
     public Task Save(WeeklyParkingSpot spot)
     {
         return Task.CompletedTask;

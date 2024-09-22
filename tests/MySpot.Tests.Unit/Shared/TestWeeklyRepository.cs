@@ -28,6 +28,16 @@ class TestWeeklyRepository : IWeeklyParkingSpotRepository
         return Task.FromResult(spots.FirstOrDefault());
     }
 
+    public Task<WeeklyParkingSpot?> FindWeeklySpotByReservation()
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<WeeklyParkingSpot?> FindWeeklySpotByReservation(ReservationId Id)
+    {
+        throw new NotImplementedException();
+    }
+
     public Task Save(WeeklyParkingSpot spot)
     {
         return Task.CompletedTask;

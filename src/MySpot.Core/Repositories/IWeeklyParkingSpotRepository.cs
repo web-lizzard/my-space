@@ -13,6 +13,8 @@ public interface IWeeklyParkingSpotRepository
 
     public Task<IEnumerable<WeeklyParkingSpot>> FindAll();
 
+    public Task<WeeklyParkingSpot?> FindWeeklySpotByReservation(ReservationId Id);
+
     Task Save(WeeklyParkingSpot spot);
 
     public Task Update(WeeklyParkingSpot spot);
