@@ -6,6 +6,7 @@ using MySpot.Core.Time;
 using MySpot.Infrastructure.DAL;
 using MySpot.Infrastructure.DAL.Decorators;
 using MySpot.Infrastructure.Exceptions;
+using MySpot.Infrastructure.Logging.Decorators;
 using MySpot.Infrastructure.Time;
 
 namespace MySpot.Infrastructure;
@@ -18,6 +19,7 @@ public static class Extension
         services.AddPostgres(configuration);
         services.AddSingleton<ExceptionMiddleware>();
         services.AddSingleton<IUnitOfWork, SQLUnitOfWork>();
+        services.TryDecorate(typeof(ICommandHandler<>), typeof(LoggingHandlerDecorator<>));
         services.TryDecorate(typeof(ICommandHandler<>), typeof(UnitOfWorkHandlerDecorator<>));
 
         return services;

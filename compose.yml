@@ -25,6 +25,17 @@ services:
     restart: always
     ports:
       - 7020:8080
+  seq:
+    image: datalust/seq:latest
+    environment:
+      SEQ_API_CANONICALURI: http://seq
+      ACCEPT_EULA: Y
+    ports:
+      - 2000:80
+      - 5341:5341
+    volumes:
+      - seq_data:/data
 
 volumes:
   postgres:
+  seq_data:

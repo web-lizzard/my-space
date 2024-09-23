@@ -2,7 +2,7 @@
 @reservation_id = 5c06971f-b821-46ce-8e03-76ec2680f9ec
 @spot_id = 00000000-0000-0000-0000-000000000004
 
-###
+### 
 GET {{url}}/parking-spots
 Accept: application/json
 
@@ -13,7 +13,7 @@ Content-Type: application/json
 {
     "employeeName": "Mark Doe",
     "licensePlate": "plate",
-    "date": "2024-09-22",
+    "date": "2024-09-26",
     "capacity": "1"
 }
 ###
