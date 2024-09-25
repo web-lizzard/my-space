@@ -26,4 +26,14 @@ internal static class Extension
             })
         };
     }
+
+    public static UserDto AsDto(this User user)
+    {
+        return new()
+        {
+            Id = user.Id,
+            FullName = user.FullName,
+            Username = user.Username
+        };
+    }
 }

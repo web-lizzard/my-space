@@ -22,6 +22,7 @@ internal static class Extension
 
         services.AddDbContext<MySpotDbContext>(x => x.UseNpgsql(options.ConnectionUrl), ServiceLifetime.Singleton);
         services.AddSingleton<IWeeklyParkingSpotRepository, SQLWeeklyParkingSpotRepository>();
+        services.AddSingleton<IUserRepository, SQLUserRepository>();
         services.AddHostedService<DatabaseInitializer>();
 
         return services;

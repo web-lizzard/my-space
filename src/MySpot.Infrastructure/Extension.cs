@@ -22,6 +22,8 @@ public static class Extension
         services.TryDecorate(typeof(ICommandHandler<>), typeof(LoggingHandlerDecorator<>));
         services.TryDecorate(typeof(ICommandHandler<>), typeof(UnitOfWorkHandlerDecorator<>));
 
+        services.AddSecurity();
+
         return services;
 
     }

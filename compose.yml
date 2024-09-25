@@ -29,7 +29,7 @@ services:
     image: datalust/seq:latest
     environment:
       SEQ_API_CANONICALURI: http://seq
-      ACCEPT_EULA: Y
+      ACCEPT_EULA: 'Y'
     ports:
       - 2000:80
       - 5341:5341

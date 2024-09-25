@@ -2,6 +2,29 @@
 @reservation_id = 5c06971f-b821-46ce-8e03-76ec2680f9ec
 @spot_id = 00000000-0000-0000-0000-000000000004
 
+@user_id = 9c671f80-74b5-411a-b802-fbd2fbfca799
+
+
+###
+
+GET {{url}}/users
+
+###
+GET {{url}}/users/{{user_id}}
+
+###
+
+POST {{url}}/users
+Content-Type: application/json
+
+{
+    "email": "user1@test.com",
+    "username": "user1",
+    "password": "secret",
+    "fullName": "John Doe",
+    "role": "user"
+}
+
 ### 
 GET {{url}}/parking-spots
 Accept: application/json

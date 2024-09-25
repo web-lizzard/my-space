@@ -9,6 +9,8 @@ internal sealed class MySpotDbContext(DbContextOptions<MySpotDbContext> dbContex
     public DbSet<Reservation> Reservations { get; set; }
     public DbSet<WeeklyParkingSpot> WeeklyParkingSpots { get; set; }
 
+    public DbSet<User> Users { get; set; }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfigurationsFromAssembly(GetType().Assembly);
