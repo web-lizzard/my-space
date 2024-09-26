@@ -1,7 +1,5 @@
 using Microsoft.Extensions.DependencyInjection;
 using MySpot.Application.Abstractions;
-using MySpot.Application.Commands;
-using MySpot.Application.Commands.Handlers;
 
 namespace MySpot.Application;
 public static class Extension

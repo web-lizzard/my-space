@@ -3,6 +3,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MySpot.Application.Abstractions;
 using MySpot.Core.Time;
+using MySpot.Infrastructure.Auth;
 using MySpot.Infrastructure.DAL;
 using MySpot.Infrastructure.DAL.Decorators;
 using MySpot.Infrastructure.Exceptions;
@@ -17,11 +18,12 @@ public static class Extension
     {
         services.AddSingleton<IClock, Clock>();
         services.AddPostgres(configuration);
+        services.AddAuth(configuration);
         services.AddSingleton<ExceptionMiddleware>();
         services.AddSingleton<IUnitOfWork, SQLUnitOfWork>();
         services.TryDecorate(typeof(ICommandHandler<>), typeof(LoggingHandlerDecorator<>));
         services.TryDecorate(typeof(ICommandHandler<>), typeof(UnitOfWorkHandlerDecorator<>));
-
+        services.AddHttpContextAccessor();
         services.AddSecurity();
 
         return services;
@@ -30,7 +32,10 @@ public static class Extension
 
     public static WebApplication UseInfrastructure(this WebApplication app)
     {
+
         app.UseMiddleware<ExceptionMiddleware>();
+        app.UseAuthentication();
+        app.UseAuthorization();
         app.MapControllers();
 
         return app;

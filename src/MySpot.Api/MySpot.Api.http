@@ -14,7 +14,7 @@ GET {{url}}/users/{{user_id}}
 
 ###
 
-POST {{url}}/users
+POST {{url}}/users/sign-up
 Content-Type: application/json
 
 {
@@ -26,6 +26,25 @@ Content-Type: application/json
 }
 
 ### 
+# @name sign_in
+
+POST  {{url}}/users/sign-in
+Content-Type: application/json
+
+{
+    "email": "user1@test.com",
+    "password": "secret"
+}
+###
+
+@accessToken = {{sign_in.response.body.$.accessToken}}
+
+
+###
+GET {{url}}/users/me
+Authorization: Bearer {{accessToken}}
+
+###
 GET {{url}}/parking-spots
 Accept: application/json
 
