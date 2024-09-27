@@ -20,15 +20,17 @@ public sealed class ReserveParkingSpotForVehicleHandler(IWeeklyParkingSpotReposi
         var week = new Week(_clock.Current());
         var allParkingSpots = await _repository.FindAllByWeek(week);
         var parkingSpotId = new ParkingSpotId(command.ParkingSpotId);
-        var parkingSpotToReserved = allParkingSpots.SingleOrDefault(spot => spot.Id == parkingSpotId) ?? throw new WeeklyParkingSpotNotFoundExceptions(parkingSpotId);
+        var parkingSpotToReserved = allParkingSpots.SingleOrDefault(spot => spot.Id == parkingSpotId)
+            ?? throw new WeeklyParkingSpotNotFoundExceptions(parkingSpotId);
         var reservation = new VehicleReservation(
             command.ReservationId,
             command.ParkingSpotId,
             command.EmployeeName,
             command.LicensePlate,
             new Date(command.Date),
-            command.Capacity);
-        _reservationService.ReserveSpotForVehicle(allParkingSpots, JobTitle.Employee, parkingSpotToReserved, reservation);
+            command.Capacity,
+            command.UserId);
+        _reservationService.ReserveSpotForVehicle(allParkingSpots, command.JobTitle ?? JobTitle.Employee, parkingSpotToReserved, reservation);
         await _repository.Update(parkingSpotToReserved);
 
     }

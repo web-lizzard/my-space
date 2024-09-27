@@ -14,14 +14,16 @@ internal sealed class Authenticator(IOptions<AuthOptions> options, IClock clock)
     private readonly IClock _clock = clock;
     private readonly JwtSecurityTokenHandler _jwtSecurityHandler = new JwtSecurityTokenHandler();
 
-    public JwtDto CreateToken(Guid userId, string role)
+    public JwtDto CreateToken(Guid userId, string role, string jobTitle, string fullName)
     {
         var now = _clock.Current();
         var expires = now.Add(_options.Value.Expiry ?? TimeSpan.FromHours(1));
         var claims = new List<Claim> {
             new(JwtRegisteredClaimNames.Sub, userId.ToString()),
             new(JwtRegisteredClaimNames.UniqueName, userId.ToString()),
-            new(ClaimTypes.Role, role)
+            new(ClaimTypes.Role, role),
+            new(ClaimsType.JobTitleClaim, jobTitle),
+            new(ClaimsType.FullNameClaim, fullName)
         };
 
         var jwt = new JwtSecurityToken(

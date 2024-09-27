@@ -25,11 +25,7 @@ public class UsersController(
     private readonly IQueryHandler<GetUsers, IEnumerable<UserDto>> _getUsersHandler = getUsersHandler;
     private readonly ITokenStorage _tokenStorage = tokenStorage;
 
-    [HttpGet]
-    public async Task<ActionResult<IEnumerable<UserDto>>> Get([FromQuery] GetUsers query)
-    {
-        return Ok(await _getUsersHandler.Handle(query));
-    }
+
 
     [HttpGet("me")]
     [Authorize]
@@ -45,11 +41,6 @@ public class UsersController(
         return Ok(await _getUserHandler.Handle(new GetUser(Guid.Parse(userId))));
     }
 
-    [HttpGet("{id:Guid}")]
-    public async Task<ActionResult<UserDto>> Get(Guid id)
-    {
-        return Ok(await _getUserHandler.Handle(new GetUser(id)));
-    }
 
     [HttpPost("sign-up")]
     public async Task<ActionResult> Post(SignUp command)
@@ -64,6 +55,21 @@ public class UsersController(
     {
         await _signInHandler.Handle(command);
         return Ok(_tokenStorage.GetJwtDto());
+    }
+
+
+    [HttpGet("{id:Guid}")]
+    [Authorize(Roles = "admin")]
+    public async Task<ActionResult<UserDto>> Get(Guid id)
+    {
+        return Ok(await _getUserHandler.Handle(new GetUser(id)));
+    }
+
+    [HttpGet]
+    [Authorize(Roles = "admin")]
+    public async Task<ActionResult<IEnumerable<UserDto>>> Get([FromQuery] GetUsers query)
+    {
+        return Ok(await _getUsersHandler.Handle(query));
     }
 
 }

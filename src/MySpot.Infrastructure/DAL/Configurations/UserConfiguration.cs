@@ -35,6 +35,8 @@ internal sealed class UserConfiguration : IEntityTypeConfiguration<User>
                 .HasConversion(x => x.Value, x => new Role(x))
                 .IsRequired()
                 .HasMaxLength(30);
+            builder.Property(x => x.JobTitle)
+                .HasConversion(x => x.Value, x => x);
             builder.Property(x => x.CreatedAt)
                 .HasConversion(date => date.Value, value => new Date(value))
                 .IsRequired();

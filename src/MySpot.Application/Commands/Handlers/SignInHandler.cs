@@ -27,7 +27,7 @@ internal sealed class SignInHandler(
             throw new InvalidCredentialsException();
         }
 
-        var token = _authenticator.CreateToken(user.Id, user.Role);
+        var token = _authenticator.CreateToken(user.Id, user.Role, user.JobTitle, user.FullName);
         _tokenStorage.Set(token);
 
     }

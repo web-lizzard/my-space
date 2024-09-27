@@ -10,6 +10,7 @@ public class User
         string username,
         string fullName,
         string role,
+        string title,
         DateTimeOffset createdAt)
     {
         Id = id;
@@ -18,6 +19,7 @@ public class User
         FullName = fullName;
         Password = password;
         Role = role;
+        JobTitle = title;
         CreatedAt = createdAt;
     }
 
@@ -34,6 +36,8 @@ public class User
     public Role Role { get; private set; }
 
     public Date CreatedAt { get; private set; }
+
+    public JobTitle JobTitle { get; private set; }
 
 
 }

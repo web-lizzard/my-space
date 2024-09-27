@@ -1,6 +1,6 @@
 @url = http://server:80
 @reservation_id = 5c06971f-b821-46ce-8e03-76ec2680f9ec
-@spot_id = 00000000-0000-0000-0000-000000000004
+@spot_id = 00000000-0000-0000-0000-000000000001
 
 @user_id = 9c671f80-74b5-411a-b802-fbd2fbfca799
 
@@ -18,11 +18,12 @@ POST {{url}}/users/sign-up
 Content-Type: application/json
 
 {
-    "email": "user1@test.com",
+    "email": "user1@admin.com",
     "username": "user1",
     "password": "secret",
     "fullName": "John Doe",
-    "role": "user"
+    "role": "admin",
+    "jobTitle": "Boss"
 }
 
 ### 
@@ -32,7 +33,7 @@ POST  {{url}}/users/sign-in
 Content-Type: application/json
 
 {
-    "email": "user1@test.com",
+    "email": "user1@admin.com",
     "password": "secret"
 }
 ###
@@ -51,11 +52,11 @@ Accept: application/json
 ###
 POST {{url}}/parking-spots/{{spot_id}}/reservations/vehicle
 Content-Type: application/json
+Authorization: Bearer {{accessToken}}
 
 {
-    "employeeName": "Mark Doe",
     "licensePlate": "plate",
-    "date": "2024-09-26",
+    "date": "2024-09-29",
     "capacity": "1"
 }
 ###
